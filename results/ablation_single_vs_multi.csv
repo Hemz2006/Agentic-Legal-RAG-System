@@ -1,0 +1,26 @@
+query,backend,single_top_score,multi_top_score,improvement_pct,single_count,multi_count
+bail conditions IPC 302 murder,tfidf_fallback,0.3262436453760731,0.3262436453760731,0.0,5,5
+anticipatory bail Supreme Court guidelines,tfidf_fallback,0.7054316903566309,0.7054316903566309,0.0,5,5
+grounds divorce Hindu Marriage Act,tfidf_fallback,0.49192150174226396,0.49192150174226396,0.0,5,5
+cheating fraud IPC 420,tfidf_fallback,0.3646938427258766,0.3646938427258766,0.0,5,5
+contempt of court punishment India,tfidf_fallback,0.5055597773900196,0.5055597773900196,0.0,5,5
+property dispute adverse possession India,tfidf_fallback,0.42390111448559675,0.42390111448559675,0.0,5,5
+domestic violence protection order India,tfidf_fallback,0.1538425128109861,0.15422150499585424,0.24635075048064278,5,5
+dowry death IPC 304B presumption,tfidf_fallback,0.45314254258760217,0.45314254258760217,0.0,5,5
+section 138 cheque dishonour notice,tfidf_fallback,0.3024905356797069,0.3024905356797069,0.0,5,5
+maintenance under section 125 CrPC,tfidf_fallback,0.3861995096977265,0.3861995096977265,0.0,5,5
+custody of child welfare principle India,tfidf_fallback,0.5355564713681005,0.5355564713681005,0.0,5,5
+specific performance contract property sale,tfidf_fallback,0.44907053874361996,0.44907053874361996,0.0,5,5
+motor accident compensation negligence,tfidf_fallback,0.37685925024425426,0.37685925024425426,0.0,5,5
+criminal breach of trust IPC 406,tfidf_fallback,0.36899150511400225,0.36899150511400225,0.0,5,5
+quashing FIR section 482 CrPC,tfidf_fallback,0.28970967437650974,0.28970967437650974,0.0,5,5
+rape consent evidence Indian criminal law,tfidf_fallback,0.307080690542642,0.307080690542642,0.0,5,5
+land acquisition compensation public purpose,tfidf_fallback,0.5656723191801445,0.5656723191801445,0.0,5,5
+trademark infringement passing off India,tfidf_fallback,0.26038077416641975,0.26038077416641975,0.0,5,5
+arbitration agreement section 11 appointment,tfidf_fallback,0.47532084332252084,0.47532084332252084,0.0,5,5
+writ petition article 226 maintainability,tfidf_fallback,0.2678409666189215,0.2678409666189215,0.0,5,5
+natural justice audi alteram partem,tfidf_fallback,0.26592117934902554,0.26592117934902554,0.0,5,5
+medical negligence consumer protection India,tfidf_fallback,0.26447528321038377,0.2674666270759369,1.1310485536652461,5,5
+service law disciplinary enquiry natural justice,tfidf_fallback,0.31660538065178734,0.31660538065178734,0.0,5,5
+constitutional validity reasonable classification,tfidf_fallback,0.18509971224335536,0.18509971224335536,0.0,5,5
+preventive detention grounds communication,tfidf_fallback,0.4122804558819973,0.4122804558819973,0.0,5,5
