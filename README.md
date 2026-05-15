@@ -1,6 +1,6 @@
 # Agentic Legal RAG System
 
-An AI-powered legal research tool for the Indian judiciary domain. The system helps lawyers, law students, legal aid workers, and researchers search Indian court judgments using natural language and receive source-grounded legal analysis.
+An AI-powered legal research tool for the Indian judiciary domain. The system helps lawyers, law students, legal aid workers, and researchers search Indian court judgments using natural language and receive source-grounded legal analysis. You can view the website in: https://agentic-legal-rag-system-genai.streamlit.app
 
 ## Problem
 
