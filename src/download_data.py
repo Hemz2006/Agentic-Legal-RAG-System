@@ -1,66 +1,48 @@
-"""Download Indian court judgments from Hugging Face for the retriever."""
+"""Download an Indian court-judgment corpus from Hugging Face into data/legal_cases.csv.
+
+Flexible: point --dataset at any HF dataset. Defaults to the generic judgment+
+summary corpus; pass a NyayaAnumana / IL-TUR id with --limit to use a larger pool.
+"""
 import argparse
 from pathlib import Path
 
-import pandas as pd
-from datasets import load_dataset
-
-DATASET_NAME = "rishiai/indian-court-judgements-and-its-summaries"
-DEFAULT_SPLIT = "train"
 OUTPUT_PATH = Path("data/legal_cases.csv")
-TEXT_COLUMN_CANDIDATES = [
-    "Judgment",
-    "judgment",
-    "judgement",
-    "text",
-    "full_text",
-    "case_text",
-    "content",
-    "Summary",
-    "summary",
-]
+TEXT_CANDIDATES = ["text", "Judgment", "judgment", "judgement", "full_text",
+                   "case_text", "content", "Summary", "summary", "facts"]
 
 
-def choose_text_column(columns: list[str]) -> str:
-    for column in TEXT_COLUMN_CANDIDATES:
-        if column in columns:
-            return column
-    raise ValueError(
-        "Could not find a judgment text column. "
-        f"Available columns: {columns}. "
-        f"Expected one of: {TEXT_COLUMN_CANDIDATES}"
-    )
+def choose_text_column(columns):
+    for c in TEXT_CANDIDATES:
+        if c in columns:
+            return c
+    raise ValueError(f"No judgment text column found. Available: {columns}")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Download Indian court judgments from Hugging Face.")
-    parser.add_argument("--split", default=DEFAULT_SPLIT)
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=None,
-        help="Optional row limit for local testing. Omit to save the full split.",
-    )
-    args = parser.parse_args()
+    ap = argparse.ArgumentParser(description="Download an Indian legal corpus from Hugging Face.")
+    ap.add_argument("--dataset", default="rishiai/indian-court-judgements-and-its-summaries")
+    ap.add_argument("--config", default=None, help="HF dataset config name (optional)")
+    ap.add_argument("--split", default="train")
+    ap.add_argument("--limit", type=int, default=None, help="Row cap (e.g. 100000 for a NyayaAnumana sample)")
+    ap.add_argument("--text-column", default=None, help="Force a specific text column")
+    args = ap.parse_args()
+
+    import pandas as pd
+    from datasets import load_dataset
 
     OUTPUT_PATH.parent.mkdir(exist_ok=True)
-    print(f"Downloading from HuggingFace: {DATASET_NAME}")
-
-    dataset = load_dataset(DATASET_NAME, split=args.split)
+    print(f"Downloading {args.dataset} (split={args.split})...")
+    ds = load_dataset(args.dataset, args.config, split=args.split) if args.config \
+        else load_dataset(args.dataset, split=args.split)
     if args.limit:
-        dataset = dataset.select(range(min(args.limit, len(dataset))))
+        ds = ds.select(range(min(args.limit, len(ds))))
 
-    df = pd.DataFrame(dataset)
-    print("Columns available:", df.columns.tolist())
-
-    text_column = choose_text_column(df.columns.tolist())
-    df = df.rename(columns={text_column: "text"})
-    df = df[["text"]].dropna()
+    df = pd.DataFrame(ds)
+    col = args.text_column or choose_text_column(df.columns.tolist())
+    df = df.rename(columns={col: "text"})[["text"]].dropna()
     df = df[df["text"].astype(str).str.strip() != ""].drop_duplicates()
     df.to_csv(OUTPUT_PATH, index=False)
-
-    print(f"Using text column: {text_column}")
-    print(f"Saved {len(df)} cases -> {OUTPUT_PATH}")
+    print(f"Saved {len(df)} documents (text column: {col}) -> {OUTPUT_PATH}")
 
 
 if __name__ == "__main__":

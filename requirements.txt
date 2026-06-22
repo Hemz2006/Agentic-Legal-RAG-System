@@ -10,3 +10,10 @@ streamlit
 torch
 transformers
 tqdm
+
+# --- TRACE-Law additions ---
+rank-bm25>=0.2.2            # BM25 baseline (offline)
+# Optional (real models; offline fallbacks exist for all of these):
+# sentence-transformers>=2.2  # cross-encoder reranker
+# transformers>=4.40          # NLI verifier + local Qwen generation
+# torch>=2.0                  # backend for the above

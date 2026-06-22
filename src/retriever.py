@@ -3,7 +3,6 @@ import logging
 import pickle
 from typing import List, Tuple
 
-import faiss
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -71,15 +70,13 @@ def _load_texts() -> List[str]:
 
 
 def build_retriever(force_rebuild: bool = False):
-    """Build a FAISS index with cosine similarity (IndexFlatIP on normalized vectors).
-
-    Caches the index and texts to disk so subsequent runs are instant.
-    """
+    """Build a FAISS index (dense) or a TF-IDF LexicalIndex, returning (index, texts)."""
     if RETRIEVER_BACKEND == "lexical":
         texts = _load_texts()
         logger.info("Building lexical TF-IDF retriever over %s documents.", len(texts))
         return LexicalIndex(texts), texts
 
+    import faiss  # lazy heavy import (dense path only)
     if (
         not force_rebuild
         and FAISS_INDEX_PATH.exists()
